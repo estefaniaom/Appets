@@ -1,6 +1,5 @@
 package com.ceiba.usuario.modelo.entidad;
 
-
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -35,4 +34,19 @@ public class Usuario {
         this.fechaCreacion = fechaCreacion;
     }
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public LocalDateTime getFechaCreacion() {
+		return fechaCreacion;
+	}
 }

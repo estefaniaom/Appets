@@ -16,6 +16,6 @@ spring:
       type: com.zaxxer.hikari.HikariDataSource
       jdbcUrl: jdbc:mysql://localhost:3306/microservicio
       username: root
-      password: ENC(eCaP7A2/yu+o9DAUhx6vtaq/vQX2Kx/t)
+      password: root
       hikari:
          poolName: pool
