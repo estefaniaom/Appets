@@ -94,9 +94,7 @@ public class ServicioCrearCita {
 			validarProximaFecha(dtoCita.getFecha(), cita.getFecha(), FRECUENCIA_MESES_DESPARACITAR);
 		}else if(dtoCita!=null && cita.getServicio().equals(SERVICIO_PELUQUERIA)){
 			validarProximaFecha(dtoCita.getFecha(), cita.getFecha(), FRECUENCIA_MESES_PELUQUERIA);
-		}else if(dtoCita!=null && cita.getServicio().equals(SERVICIO_VACUNA_TRIPLEFELINA)){
-			validarProximaFecha(dtoCita.getFecha(), cita.getFecha(), FRECUENCIA_MESES_VACUNAS);
-		}else if(dtoCita!=null && cita.getServicio().equals(SERVICIO_VACUNA_RABIA)){
+		}else if(dtoCita!=null && (cita.getServicio().equals(SERVICIO_VACUNA_TRIPLEFELINA) || cita.getServicio().equals(SERVICIO_VACUNA_RABIA))){
 			validarProximaFecha(dtoCita.getFecha(), cita.getFecha(), FRECUENCIA_MESES_VACUNAS);
 		}
 	}
