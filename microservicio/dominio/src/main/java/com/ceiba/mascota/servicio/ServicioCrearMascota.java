@@ -21,6 +21,8 @@ public class ServicioCrearMascota {
 	
 	public void validarExistenciaPrevia(Mascota mascota){
 		boolean existe = this.repositorioMascota.existe(mascota.getNombre(), mascota.getNombreContacto());
-		if(existe) { throw new ExcepcionDuplicidad(LA_MASCOTA_YA_EXISTE_EN_EL_SISTEMA); }
+		if(existe) { 
+			throw new ExcepcionDuplicidad(LA_MASCOTA_YA_EXISTE_EN_EL_SISTEMA); 
+		}
 	}
 }
