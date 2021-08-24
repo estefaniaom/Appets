@@ -122,6 +122,7 @@ public class ServicioCrearCitaTest {
 		Cita citaVacunaTripleFelina = new CitaTestDataBuilder().buildServicioVacunaTripleFelina();
 		Cita citaSinAnteriores = new CitaTestDataBuilder().buildServicioVacunaTripleFelina();
 		Cita citaFechaCorrecta = new CitaTestDataBuilder().buildServicioPeluqueria();
+		Cita citaVacunaFechaCorrecta = new CitaTestDataBuilder().buildServicioPeluqueria();
 		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
 		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
 		List<DtoCita> citasDesparacitacion = new ArrayList<>();
@@ -146,12 +147,18 @@ public class ServicioCrearCitaTest {
 		DtoCita ultimaCitaPeluqueriaCorrecta = new CitaTestDataBuilder().buildDtoCitaPeluqueriaCorrecta();
 		citasPeluqueriaCorrecta.add(ultimaCitaPeluqueriaCorrecta);
 		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(citaFechaCorrecta.getIdMascota(), citaFechaCorrecta.getServicio())).thenReturn(citasPeluqueriaCorrecta);
+		List<DtoCita> citasVacunaCorrecta = new ArrayList<>();
+		DtoCita ultimaCitaVacunaCorrecta = new CitaTestDataBuilder().buildDtoCitaVacunaCorrecta();
+		citasVacunaCorrecta.add(ultimaCitaVacunaCorrecta);
+		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(citaVacunaFechaCorrecta.getIdMascota(), citaVacunaFechaCorrecta.getServicio())).thenReturn(citasVacunaCorrecta);
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaDesparacitacion), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaPeluqueria), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaVacunaRabia), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaVacunaTripleFelina), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaSinAnteriores));
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaFechaCorrecta));
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaVacunaFechaCorrecta));
+		
 	}
 	
 	@Test

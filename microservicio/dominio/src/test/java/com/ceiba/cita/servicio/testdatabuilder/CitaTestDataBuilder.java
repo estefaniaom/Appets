@@ -128,6 +128,12 @@ public class CitaTestDataBuilder {
 		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
 	}
 	
+	public DtoCita buildDtoCitaVacunaCorrecta(){
+		LocalDateTime fechaAnterior = fecha.minusMonths(13);
+		servicio = SERVICIO_VACUNA_RABIA;
+		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
+	}
+	
 	public DtoCita buildDtoCitaVacunaRabia(){
 		LocalDateTime fechaAnterior = fecha.minusMonths(10);
 		servicio = SERVICIO_VACUNA_RABIA;

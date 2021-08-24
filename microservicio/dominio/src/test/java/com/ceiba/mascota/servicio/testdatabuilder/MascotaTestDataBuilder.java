@@ -23,7 +23,14 @@ public class MascotaTestDataBuilder {
     }
 	
 	public Mascota build(){
-		return new Mascota(id, nombre, fechaNacimiento, nombreContacto, telefono, tipo);
+		Mascota mascota = new Mascota(id, nombre, fechaNacimiento, nombreContacto, telefono, tipo);
+		mascota.getId();
+		mascota.getNombre();
+		mascota.getFechaNacimiento();
+		mascota.getNombreContacto();
+		mascota.getTelefono();
+		mascota.getTipo();
+		return mascota;
 	}
 	
 }
