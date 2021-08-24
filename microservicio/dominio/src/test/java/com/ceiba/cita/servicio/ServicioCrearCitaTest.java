@@ -23,7 +23,6 @@ public class ServicioCrearCitaTest {
 	private static final long PRECIO_VACUNA_RABIA = 35000;
 	private static final long PRECIO_DESPARACITACION = 60000;
 	private static final double DESCUENTO_CUMPLEANOS = 0.15;
-
 	@Test
 	public void validarCitaExistenciaPrevia(){
 		Cita cita = new CitaTestDataBuilder().build();
@@ -32,7 +31,6 @@ public class ServicioCrearCitaTest {
 		Mockito.when(repositorioCita.existe(cita.getIdMascota(), cita.getFecha())).thenReturn(true);
 		BasePrueba.assertThrows(() -> servicioCrearCita.ejecutar(cita), ExcepcionDuplicidad.class,"La mascota ya tiene una cita en este horario");
 	}
-	
 	@Test
 	public void validarCitaNoExistenciaPrevia(){
 		Cita cita = new CitaTestDataBuilder().build();
@@ -41,7 +39,6 @@ public class ServicioCrearCitaTest {
 		Mockito.when(repositorioCita.existe(cita.getIdMascota(), cita.getFecha())).thenReturn(false);
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarExistenciaPrevia(cita));
 	}
-
 	@Test
 	public void validarCitaHoraAtencion(){
 		Cita citaDespues = new CitaTestDataBuilder().buildFueraHorarioDespues();
@@ -53,7 +50,6 @@ public class ServicioCrearCitaTest {
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarHoraAtencion(citaAntes), ExcepcionValorInvalido.class,"El horario de atencion es desde las 07:00 hasta las 19:00");
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarHoraAtencion(citaDentro));
 	}
-	
 	@Test
 	public void validarCitaCalcularPrecio(){
 		Cita citaDesparacitacion = new CitaTestDataBuilder().buildServicioDesparacitacion();
@@ -80,7 +76,6 @@ public class ServicioCrearCitaTest {
 		assertEquals(PRECIO_VACUNA_TRIPLEFELINA, citaVacunaTripleFelinaPrecio.getPrecio().longValue());
 		BasePrueba.assertThrows(() -> servicioCrearCita.calcularPrecio(citaServicioNoExiste), ExcepcionValorInvalido.class,"El servicio es desconocido");
 	}
-	
 	@Test
 	public void validarMascotaNoExiste(){
 		Cita citaDesparacitacion = new CitaTestDataBuilder().buildServicioDesparacitacion();
@@ -88,7 +83,6 @@ public class ServicioCrearCitaTest {
 		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
 		BasePrueba.assertThrows(() -> servicioCrearCita.calcularPrecio(citaDesparacitacion), ExcepcionValorInvalido.class,"La mascota no esta registrada en el sistema");
 	}
-	
 	@Test
 	public void validarCitaCalcularPrecioDescuento(){
 		Cita citaDesparacitacion = new CitaTestDataBuilder().buildServicioDesparacitacion();
@@ -113,7 +107,6 @@ public class ServicioCrearCitaTest {
 		assertEquals(citaVacunaRabiaPrecio.getPrecio().longValue(), PRECIO_VACUNA_RABIA-Math.round(PRECIO_VACUNA_RABIA*DESCUENTO_CUMPLEANOS));
 		assertEquals(citaVacunaTripleFelinaPrecio.getPrecio().longValue(), PRECIO_VACUNA_TRIPLEFELINA-Math.round(PRECIO_VACUNA_TRIPLEFELINA*DESCUENTO_CUMPLEANOS));
 	}
-	
 	@Test
 	public void validarCitaFecha(){
 		Cita citaDesparacitacion = new CitaTestDataBuilder().buildServicioDesparacitacion();
@@ -158,9 +151,7 @@ public class ServicioCrearCitaTest {
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaSinAnteriores));
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaFechaCorrecta));
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaVacunaFechaCorrecta));
-		
 	}
-	
 	@Test
 	public void validarCrearCita(){
 		Cita cita = new CitaTestDataBuilder().buildServicioDesparacitacion();
@@ -177,5 +168,4 @@ public class ServicioCrearCitaTest {
 		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(cita.getIdMascota(), cita.getServicio())).thenReturn(citasDesparacitacion);
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.ejecutar(cita));
 	}
-	
 }
