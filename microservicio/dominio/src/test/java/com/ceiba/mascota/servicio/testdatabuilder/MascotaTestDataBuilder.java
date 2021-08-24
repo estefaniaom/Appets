@@ -18,7 +18,7 @@ public class MascotaTestDataBuilder {
         nombre = "Garfield";
         fechaNacimiento = LocalDateTime.now().minusYears(Math.round(Math.random()*10));
         nombreContacto = "Jhon Doe";
-        telefono = "3152568596";
+        telefono = "3152000000";
         tipo = "Gato";
     }
 	
