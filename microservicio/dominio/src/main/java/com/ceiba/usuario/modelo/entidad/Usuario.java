@@ -33,20 +33,4 @@ public class Usuario {
         this.clave = clave;
         this.fechaCreacion = fechaCreacion;
     }
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public String getClave() {
-		return clave;
-	}
-
-	public LocalDateTime getFechaCreacion() {
-		return fechaCreacion;
-	}
 }

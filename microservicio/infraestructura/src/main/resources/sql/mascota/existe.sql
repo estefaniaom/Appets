@@ -1,0 +1,1 @@
+select count(1) from mascota where nombre = :nombre and nombre_contacto = :nombreContacto

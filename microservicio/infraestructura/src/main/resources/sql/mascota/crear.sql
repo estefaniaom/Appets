@@ -1,0 +1,1 @@
+insert into mascota (nombre, fecha_nacimiento, nombre_contacto, telefono, tipo) values (:nombre, :fechaNacimiento, :nombreContacto, :telefono, :tipo)

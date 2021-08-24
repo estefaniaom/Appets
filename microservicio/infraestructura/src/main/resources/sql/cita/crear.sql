@@ -1,0 +1,1 @@
+insert into cita (fecha, servicio, idmascota, nombre, precio) values (:fecha, :servicio, :idMascota, :nombre, :precio)

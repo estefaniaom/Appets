@@ -1,4 +1,4 @@
-package com.ceiba.usuario.comando;
+package com.ceiba.cita.comando;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +11,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComandoUsuario{
+public class ComandoCita {
 
-    private Long id;
-    private String nombre;
-    private String clave;
-    private LocalDateTime fecha;    
+	private Long id;
+	private LocalDateTime fecha;
+	private String servicio;
+	private Long idMascota;
+	private String nombre;
 }
