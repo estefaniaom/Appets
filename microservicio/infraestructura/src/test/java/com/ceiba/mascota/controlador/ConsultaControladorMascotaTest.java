@@ -31,5 +31,13 @@ public class ConsultaControladorMascotaTest {
 	                .andExpect(status().isOk())
 	                .andExpect(jsonPath("$[0].nombre", is("Sky")));
 	    }
+	    
+	    @Test
+	    public void encontrarPorId() throws Exception {
+	        mocMvc.perform(get("/mascotas/1")
+	                .contentType(MediaType.APPLICATION_JSON))
+	                .andExpect(status().isOk())
+	                .andExpect(jsonPath("nombre", is("Sky")));
+	    }
 	
 }
