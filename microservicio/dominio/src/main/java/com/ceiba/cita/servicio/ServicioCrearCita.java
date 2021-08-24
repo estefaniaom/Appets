@@ -76,8 +76,7 @@ public class ServicioCrearCita {
 			throw new ExcepcionValorInvalido(LA_MASCOTA_NO_EXISTE);
 		}
 		if(mascota.getFechaNacimiento().getMonthValue()==LocalDateTime.now().getMonthValue()){
-			long descuento = Math.round(precio*DESCUENTO_CUMPLEANOS);
-			precio -= descuento;
+			precio -=  Math.round(precio*DESCUENTO_CUMPLEANOS);
 		}
 		cita.setPrecio(precio);
 		cita.setNombre(mascota.getNombre());
