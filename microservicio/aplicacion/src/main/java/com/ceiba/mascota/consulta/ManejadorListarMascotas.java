@@ -22,8 +22,6 @@ public class ManejadorListarMascotas {
 	private static final int FRECUENCIA_MESES_DESPARACITAR = 1;
 	private static final int FRECUENCIA_MESES_PELUQUERIA = 3;
 	
-	private static final String LA_MASCOTA_NO_EXISTE = "No hay registrado en el sistema ninguna mascota con ese id";
-	
 	public ManejadorListarMascotas(DaoMascota daoMascota){
 		this.daoMascota = daoMascota;
 	}

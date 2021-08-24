@@ -154,4 +154,21 @@ public class ServicioCrearCitaTest {
 		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaFechaCorrecta));
 	}
 	
+	@Test
+	public void validarCrearCita(){
+		Cita cita = new CitaTestDataBuilder().buildServicioDesparacitacion();
+		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
+		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
+		Mockito.when(repositorioCita.existe(cita.getIdMascota(), cita.getFecha())).thenReturn(false);
+		List<DtoMascota> mascotas = new ArrayList<>();
+		DtoMascota dtoMascota = new CitaTestDataBuilder().buildDtoMascotaDescuento();
+		mascotas.add(dtoMascota);
+		Mockito.when(repositorioCita.encontrarPorId(cita.getIdMascota())).thenReturn(mascotas);
+		List<DtoCita> citasDesparacitacion = new ArrayList<>();
+		DtoCita ultimaCitaDesparacitacion = new CitaTestDataBuilder().buildDtoCitaDesparacitacionCorrecta();
+		citasDesparacitacion.add(ultimaCitaDesparacitacion);
+		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(cita.getIdMascota(), cita.getServicio())).thenReturn(citasDesparacitacion);
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.ejecutar(cita));
+	}
+	
 }

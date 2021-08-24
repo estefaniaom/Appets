@@ -97,7 +97,14 @@ public class CitaTestDataBuilder {
 	public DtoCita buildDtoCitaDesparacitacion(){
 		LocalDateTime fechaAnterior = fecha.minusDays(5);
 		servicio = SERVICIO_DESPARACITAR;
-		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
+		DtoCita dtoCita = new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
+		dtoCita.getFecha();
+		dtoCita.getId();
+		dtoCita.getIdMascota();
+		dtoCita.getNombre();
+		dtoCita.getPrecio();
+		dtoCita.getServicio();
+		return dtoCita;
 	}
 	
 	public DtoCita buildDtoCitaPeluqueria(){
@@ -109,6 +116,12 @@ public class CitaTestDataBuilder {
 	public DtoCita buildDtoCitaPeluqueriaCorrecta(){
 		LocalDateTime fechaAnterior = fecha.minusMonths(3);
 		servicio = SERVICIO_PELUQUERIA;
+		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
+	}
+	
+	public DtoCita buildDtoCitaDesparacitacionCorrecta(){
+		LocalDateTime fechaAnterior = fecha.minusMonths(1);
+		servicio = SERVICIO_DESPARACITAR;
 		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
 	}
 	
