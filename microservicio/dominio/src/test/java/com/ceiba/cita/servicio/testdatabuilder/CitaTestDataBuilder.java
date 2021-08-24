@@ -69,7 +69,10 @@ public class CitaTestDataBuilder {
 	
 	public Cita buildServicioNoExiste(){
 		servicio = SERVICIO_NO_EXISTE;
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		Cita cita = new Cita(id,fecha,servicio,idMascota,nombre);
+		cita.setId(cita.getId());
+		cita.setNombre(cita.getNombre());
+		return cita;
 	}
 	
 	public DtoMascota buildDtoMascota(){
@@ -85,6 +88,10 @@ public class CitaTestDataBuilder {
 		dtoMascota.setFechaProximaPeluqueria(fecha);
 		dtoMascota.setFechaProximaVacunaRabia(fecha);
 		dtoMascota.setFechaProximaVacunaTripleFelina(fecha);
+		dtoMascota.getFechaProximaDesparacitacion();
+		dtoMascota.getFechaProximaPeluqueria();
+		dtoMascota.getFechaProximaVacunaRabia();
+		dtoMascota.getFechaProximaVacunaTripleFelina();
 		return dtoMascota;
 		
 	}
