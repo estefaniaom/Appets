@@ -77,21 +77,17 @@ public class CitaTestDataBuilder {
 	
 	public DtoMascota buildDtoMascota(){
 		LocalDateTime fechaNacimiento = fecha.minusMonths(2);
-		DtoMascota dtoMascota = new DtoMascota(idMascota, nombre, fechaNacimiento, "Jhon Doe", "3152000000", "Gato");
+		DtoMascota dtoMascota = new DtoMascota(idMascota, nombre, fechaNacimiento, "Jhon Doe", "3152000000", "Gato", fecha, fecha, fecha, fecha);
 		dtoMascota.setId(dtoMascota.getId());
 		dtoMascota.setNombre(dtoMascota.getNombre());
 		dtoMascota.setFechaNacimiento(dtoMascota.getFechaNacimiento());
 		dtoMascota.setNombreContacto(dtoMascota.getNombreContacto());
 		dtoMascota.setTelefono(dtoMascota.getTelefono());
 		dtoMascota.setTipo(dtoMascota.getTipo());
-		dtoMascota.setFechaProximaDesparacitacion(fecha);
-		dtoMascota.setFechaProximaPeluqueria(fecha);
-		dtoMascota.setFechaProximaVacunaRabia(fecha);
-		dtoMascota.setFechaProximaVacunaTripleFelina(fecha);
-		dtoMascota.getFechaProximaDesparacitacion();
-		dtoMascota.getFechaProximaPeluqueria();
-		dtoMascota.getFechaProximaVacunaRabia();
-		dtoMascota.getFechaProximaVacunaTripleFelina();
+		dtoMascota.setFechaProximaDesparacitacion(dtoMascota.getFechaProximaDesparacitacion());
+		dtoMascota.setFechaProximaPeluqueria(dtoMascota.getFechaProximaPeluqueria());
+		dtoMascota.setFechaProximaVacunaRabia(dtoMascota.getFechaProximaVacunaRabia());
+		dtoMascota.setFechaProximaVacunaTripleFelina(dtoMascota.getFechaProximaVacunaTripleFelina());
 		return dtoMascota;
 		
 	}

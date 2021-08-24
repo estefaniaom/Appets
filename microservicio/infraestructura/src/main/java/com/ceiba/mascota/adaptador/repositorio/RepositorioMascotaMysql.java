@@ -32,17 +32,6 @@ public class RepositorioMascotaMysql implements RepositorioMascota{
 		return this.customNamedParameterJdbcTemplate.crear(mascota, sqlCrear);
 	}
 	@Override
-	public void actualizar(Mascota mascota) {
-		this.customNamedParameterJdbcTemplate.actualizar(mascota, sqlActualizar);
-	}
-	@Override
-	public void eliminar(Long id) {
-		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id", id);
-        
-        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlEliminar, paramSource);
-	}
-	@Override
 	public boolean existe(String nombre, String nombreContacto) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("nombre", nombre);

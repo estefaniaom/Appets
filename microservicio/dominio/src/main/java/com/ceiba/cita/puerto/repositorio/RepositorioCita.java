@@ -10,8 +10,6 @@ import com.ceiba.mascota.modelo.dto.DtoMascota;
 public interface RepositorioCita {
 
 	Long crear(Cita cita);
-	void actualizar(Cita cita);
-	void eliminar(Long id);
 	boolean existe(Long idMascota, LocalDateTime fecha);
 	List<DtoMascota> encontrarPorId(Long id);
 	List<DtoCita> encontrarUltimaCitaPorMascotaYServicio(Long idMascota, String servicio);
