@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ceiba.cita.modelo.dto.DtoCita;
-import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 import com.ceiba.mascota.modelo.dto.DtoMascota;
 import com.ceiba.mascota.puerto.dao.DaoMascota;
 
@@ -35,13 +34,12 @@ public class ManejadorListarMascotas {
 	
 	public DtoMascota encontrarPorId(Long id){
 		DtoMascota dtoMascota = this.daoMascota.encontrarPorId(id);
-		if(dtoMascota==null){
-			throw new ExcepcionSinDatos(LA_MASCOTA_NO_EXISTE);
+		if(dtoMascota!=null){
+			dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_DESPARACITAR);
+			dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_PELUQUERIA);
+			dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_VACUNA_TRIPLEFELINA);
+			dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_VACUNA_RABIA);
 		}
-		dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_DESPARACITAR);
-		dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_PELUQUERIA);
-		dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_VACUNA_TRIPLEFELINA);
-		dtoMascota = completarProximasFechas(dtoMascota,SERVICIO_VACUNA_RABIA);
 		return dtoMascota;
 	}
 	
