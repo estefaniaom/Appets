@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -35,11 +34,24 @@ public class ServicioCrearCitaTest {
 	}
 	
 	@Test
-	public void validarCitaHoraAtencion(){
-		Cita cita = new CitaTestDataBuilder().buildFueraHorario();
+	public void validarCitaNoExistenciaPrevia(){
+		Cita cita = new CitaTestDataBuilder().build();
 		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
 		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
-		BasePrueba.assertThrows(() -> servicioCrearCita.validarHoraAtencion(cita), ExcepcionValorInvalido.class,"El horario de atencion es desde las 07:00 hasta las 19:00");
+		Mockito.when(repositorioCita.existe(cita.getIdMascota(), cita.getFecha())).thenReturn(false);
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarExistenciaPrevia(cita));
+	}
+
+	@Test
+	public void validarCitaHoraAtencion(){
+		Cita citaDespues = new CitaTestDataBuilder().buildFueraHorarioDespues();
+		Cita citaAntes = new CitaTestDataBuilder().buildFueraHorarioAntes();
+		Cita citaDentro = new CitaTestDataBuilder().buildFueraHorarioDentro();
+		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
+		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
+		BasePrueba.assertThrows(() -> servicioCrearCita.validarHoraAtencion(citaDespues), ExcepcionValorInvalido.class,"El horario de atencion es desde las 07:00 hasta las 19:00");
+		BasePrueba.assertThrows(() -> servicioCrearCita.validarHoraAtencion(citaAntes), ExcepcionValorInvalido.class,"El horario de atencion es desde las 07:00 hasta las 19:00");
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarHoraAtencion(citaDentro));
 	}
 	
 	@Test
@@ -48,6 +60,7 @@ public class ServicioCrearCitaTest {
 		Cita citaPeluqueria = new CitaTestDataBuilder().buildServicioPeluqueria();
 		Cita citaVacunaRabia = new CitaTestDataBuilder().buildServicioVacunaRabia();
 		Cita citaVacunaTripleFelina = new CitaTestDataBuilder().buildServicioVacunaTripleFelina();
+		Cita citaServicioNoExiste = new CitaTestDataBuilder().buildServicioNoExiste();
 		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
 		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
 		List<DtoMascota> mascotas = new ArrayList<>();
@@ -61,10 +74,11 @@ public class ServicioCrearCitaTest {
 		Cita citaPeluqueriaPrecio  = servicioCrearCita.calcularPrecio(citaPeluqueria);
 		Cita citaVacunaRabiaPrecio  = servicioCrearCita.calcularPrecio(citaVacunaRabia);
 		Cita citaVacunaTripleFelinaPrecio  = servicioCrearCita.calcularPrecio(citaVacunaTripleFelina);
-		assertEquals(citaDesparacitacionPrecio.getPrecio().longValue(), PRECIO_DESPARACITACION);
-		assertEquals(citaPeluqueriaPrecio.getPrecio().longValue(), PRECIO_PELUQUERIA);
-		assertEquals(citaVacunaRabiaPrecio.getPrecio().longValue(), PRECIO_VACUNA_RABIA);
-		assertEquals(citaVacunaTripleFelinaPrecio.getPrecio().longValue(), PRECIO_VACUNA_TRIPLEFELINA);
+		assertEquals(PRECIO_DESPARACITACION, citaDesparacitacionPrecio.getPrecio().longValue());
+		assertEquals(PRECIO_PELUQUERIA, citaPeluqueriaPrecio.getPrecio().longValue());
+		assertEquals(PRECIO_VACUNA_RABIA, citaVacunaRabiaPrecio.getPrecio().longValue());
+		assertEquals(PRECIO_VACUNA_TRIPLEFELINA, citaVacunaTripleFelinaPrecio.getPrecio().longValue());
+		BasePrueba.assertThrows(() -> servicioCrearCita.calcularPrecio(citaServicioNoExiste), ExcepcionValorInvalido.class,"El servicio es desconocido");
 	}
 	
 	@Test
@@ -106,6 +120,8 @@ public class ServicioCrearCitaTest {
 		Cita citaPeluqueria = new CitaTestDataBuilder().buildServicioPeluqueria();
 		Cita citaVacunaRabia = new CitaTestDataBuilder().buildServicioVacunaRabia();
 		Cita citaVacunaTripleFelina = new CitaTestDataBuilder().buildServicioVacunaTripleFelina();
+		Cita citaSinAnteriores = new CitaTestDataBuilder().buildServicioVacunaTripleFelina();
+		Cita citaFechaCorrecta = new CitaTestDataBuilder().buildServicioPeluqueria();
 		RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
 		ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita);
 		List<DtoCita> citasDesparacitacion = new ArrayList<>();
@@ -124,10 +140,18 @@ public class ServicioCrearCitaTest {
 		DtoCita ultimaCitaVacunaTripleFelina = new CitaTestDataBuilder().buildDtoCitaVacunaTripleFelina();
 		citasVacunaTripleFelina.add(ultimaCitaVacunaTripleFelina);
 		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(citaVacunaTripleFelina.getIdMascota(), citaVacunaTripleFelina.getServicio())).thenReturn(citasVacunaTripleFelina);
+		List<DtoCita> citasSinAnteriores = new ArrayList<>();
+		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(citaSinAnteriores.getIdMascota(), citaSinAnteriores.getServicio())).thenReturn(citasSinAnteriores);
+		List<DtoCita> citasPeluqueriaCorrecta = new ArrayList<>();
+		DtoCita ultimaCitaPeluqueriaCorrecta = new CitaTestDataBuilder().buildDtoCitaPeluqueriaCorrecta();
+		citasPeluqueriaCorrecta.add(ultimaCitaPeluqueriaCorrecta);
+		Mockito.when(repositorioCita.encontrarUltimaCitaPorMascotaYServicio(citaFechaCorrecta.getIdMascota(), citaFechaCorrecta.getServicio())).thenReturn(citasPeluqueriaCorrecta);
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaDesparacitacion), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaPeluqueria), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaVacunaRabia), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
 		BasePrueba.assertThrows(() -> servicioCrearCita.validarFecha(citaVacunaTripleFelina), ExcepcionValorInvalido.class,"No se cumple la fecha minima entre citas del mismo servicio");
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaSinAnteriores));
+		BasePrueba.assertNoThrows(() -> servicioCrearCita.validarFecha(citaFechaCorrecta));
 	}
 	
 }

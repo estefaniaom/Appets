@@ -19,6 +19,7 @@ public class CitaTestDataBuilder {
 	private static final String SERVICIO_VACUNA_RABIA = "VACUNA ANTIRABICA";
 	private static final String SERVICIO_DESPARACITAR = "DESPARACITACION";
 	private static final String SERVICIO_PELUQUERIA = "PELUQUERIA";
+	private static final String SERVICIO_NO_EXISTE = "OTRO SERVICIO";
 	
 	public CitaTestDataBuilder(){
 		id = Math.round(Math.random()*100);
@@ -31,8 +32,18 @@ public class CitaTestDataBuilder {
 		return new Cita(id,fecha,servicio,idMascota,nombre);
 	}
 	
-	public Cita buildFueraHorario(){
+	public Cita buildFueraHorarioDespues(){
 		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 20, 0);
+		return new Cita(id,fecha,servicio,idMascota,nombre);
+	}
+	
+	public Cita buildFueraHorarioAntes(){
+		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 5, 0);
+		return new Cita(id,fecha,servicio,idMascota,nombre);
+	}
+	
+	public Cita buildFueraHorarioDentro(){
+		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 9, 0);
 		return new Cita(id,fecha,servicio,idMascota,nombre);
 	}
 	
@@ -56,9 +67,26 @@ public class CitaTestDataBuilder {
 		return new Cita(id,fecha,servicio,idMascota,nombre);
 	}
 	
+	public Cita buildServicioNoExiste(){
+		servicio = SERVICIO_NO_EXISTE;
+		return new Cita(id,fecha,servicio,idMascota,nombre);
+	}
+	
 	public DtoMascota buildDtoMascota(){
 		LocalDateTime fechaNacimiento = fecha.minusMonths(2);
-		return new DtoMascota(idMascota, nombre, fechaNacimiento, "Jhon Doe", "3152000000", "Gato");
+		DtoMascota dtoMascota = new DtoMascota(idMascota, nombre, fechaNacimiento, "Jhon Doe", "3152000000", "Gato");
+		dtoMascota.setId(dtoMascota.getId());
+		dtoMascota.setNombre(dtoMascota.getNombre());
+		dtoMascota.setFechaNacimiento(dtoMascota.getFechaNacimiento());
+		dtoMascota.setNombreContacto(dtoMascota.getNombreContacto());
+		dtoMascota.setTelefono(dtoMascota.getTelefono());
+		dtoMascota.setTipo(dtoMascota.getTipo());
+		dtoMascota.setFechaProximaDesparacitacion(fecha);
+		dtoMascota.setFechaProximaPeluqueria(fecha);
+		dtoMascota.setFechaProximaVacunaRabia(fecha);
+		dtoMascota.setFechaProximaVacunaTripleFelina(fecha);
+		return dtoMascota;
+		
 	}
 	
 	public DtoMascota buildDtoMascotaDescuento(){
@@ -74,6 +102,12 @@ public class CitaTestDataBuilder {
 	
 	public DtoCita buildDtoCitaPeluqueria(){
 		LocalDateTime fechaAnterior = fecha.minusMonths(2);
+		servicio = SERVICIO_PELUQUERIA;
+		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
+	}
+	
+	public DtoCita buildDtoCitaPeluqueriaCorrecta(){
+		LocalDateTime fechaAnterior = fecha.minusMonths(3);
 		servicio = SERVICIO_PELUQUERIA;
 		return new DtoCita(id, fechaAnterior, servicio, idMascota, nombre, precio);
 	}
