@@ -6,7 +6,6 @@ import com.ceiba.mascota.comando.ComandoMascota;
 
 public class ComandoMascotaTestDataBuilder {
 
-	private Long id;
 	private String nombre;
 	private LocalDateTime fecha;
 	private String contacto;
@@ -22,6 +21,6 @@ public class ComandoMascotaTestDataBuilder {
 	}
 	
 	public ComandoMascota build(){
-		return new ComandoMascota(id,nombre,fecha,contacto,telefono,tipo);
+		return new ComandoMascota(nombre,fecha,contacto,telefono,tipo);
 	}
 }

@@ -13,9 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ComandoCita {
 
-	private Long id;
 	private LocalDateTime fecha;
 	private String servicio;
 	private Long idMascota;
-	private String nombre;
 }

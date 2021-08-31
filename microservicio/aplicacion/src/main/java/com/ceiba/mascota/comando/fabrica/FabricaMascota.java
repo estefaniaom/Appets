@@ -10,7 +10,6 @@ public class FabricaMascota {
 
 	public Mascota crearMascota(ComandoMascota comandoMascota){
 		return new Mascota(
-				comandoMascota.getId(), 
 				comandoMascota.getNombre(), 
 				comandoMascota.getFecha(), 
 				comandoMascota.getContacto(), 

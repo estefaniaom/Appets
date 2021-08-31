@@ -6,7 +6,6 @@ import com.ceiba.mascota.modelo.entidad.Mascota;
 
 public class MascotaTestDataBuilder {
 
-	private Long id;
 	private String nombre;
 	private LocalDateTime fechaNacimiento;
 	private String nombreContacto;
@@ -14,7 +13,6 @@ public class MascotaTestDataBuilder {
 	private String tipo;
 	
 	public MascotaTestDataBuilder() {
-		id = Math.round(Math.random()*100);
         nombre = "Garfield";
         fechaNacimiento = LocalDateTime.now().minusYears(Math.round(Math.random()*10));
         nombreContacto = "Jhon Doe";
@@ -23,7 +21,7 @@ public class MascotaTestDataBuilder {
     }
 	
 	public Mascota build(){
-		Mascota mascota = new Mascota(id, nombre, fechaNacimiento, nombreContacto, telefono, tipo);
+		Mascota mascota = new Mascota(nombre, fechaNacimiento, nombreContacto, telefono, tipo);
 		mascota.getId();
 		mascota.getNombre();
 		mascota.getFechaNacimiento();

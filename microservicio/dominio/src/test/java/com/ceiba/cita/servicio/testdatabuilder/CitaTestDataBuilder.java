@@ -22,55 +22,53 @@ public class CitaTestDataBuilder {
 	private static final String SERVICIO_NO_EXISTE = "OTRO SERVICIO";
 	
 	public CitaTestDataBuilder(){
-		id = Math.round(Math.random()*100);
 		fecha = LocalDateTime.now();
 		idMascota = Math.round(Math.random()*100);
-		nombre = "Pantera";
+		servicio = SERVICIO_VACUNA_TRIPLEFELINA;
 	}
 	
 	public Cita build(){
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildFueraHorarioDespues(){
 		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 20, 0);
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildFueraHorarioAntes(){
 		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 5, 0);
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildFueraHorarioDentro(){
 		fecha = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getDayOfMonth(), 9, 0);
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildServicioVacunaRabia(){
 		servicio = SERVICIO_VACUNA_RABIA;
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildServicioVacunaTripleFelina(){
 		servicio = SERVICIO_VACUNA_TRIPLEFELINA;
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildServicioPeluqueria(){
 		servicio = SERVICIO_PELUQUERIA;
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildServicioDesparacitacion(){
 		servicio = SERVICIO_DESPARACITAR;
-		return new Cita(id,fecha,servicio,idMascota,nombre);
+		return new Cita(fecha,servicio,idMascota);
 	}
 	
 	public Cita buildServicioNoExiste(){
 		servicio = SERVICIO_NO_EXISTE;
-		Cita cita = new Cita(id,fecha,servicio,idMascota,nombre);
-		cita.setId(cita.getId());
+		Cita cita = new Cita(fecha,servicio,idMascota);
 		cita.setNombre(cita.getNombre());
 		return cita;
 	}

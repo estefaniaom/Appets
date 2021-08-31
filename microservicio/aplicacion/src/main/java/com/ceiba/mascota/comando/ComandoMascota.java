@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ComandoMascota {
 
-	private Long id;
 	private String nombre;
 	private LocalDateTime fecha;
 	private String contacto;
