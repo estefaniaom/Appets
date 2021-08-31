@@ -26,7 +26,7 @@ public class ServicioCrearCita {
 	}
 	public Long ejecutar(Cita cita){
 		validarExistenciaPrevia(cita);
-		cita = calcularPrecio(cita);
+		calcularPrecio(cita);
 		validarHoraAtencion(cita);
 		validarFecha(cita);
 		return this.repositorioCita.crear(cita);

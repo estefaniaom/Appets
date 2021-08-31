@@ -1,7 +1,9 @@
 package com.ceiba.mascota.adaptador.dao;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -57,21 +59,18 @@ public class DaoMascotaMysql implements DaoMascota {
 			return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().query(sqlEncontrarUltimaCitaPorId,paramSource, new MapeoCita());
 		}
 		
-		public DtoMascota completarProximasFechas(DtoMascota dtoMascota, String servicio){
+		private DtoMascota completarProximasFechas(DtoMascota dtoMascota, String servicio){
 			DtoCita dtoCita = encontrarUltimaCitaPorMascotaYServicio(dtoMascota.getId(), servicio).isEmpty()?null:encontrarUltimaCitaPorMascotaYServicio(dtoMascota.getId(), servicio).get(0);
-			if(dtoCita!=null && dtoCita.getServicio().equals(ServiciosCita.SERVICIO_DESPARACITAR.getServicio())){
-				dtoMascota.setFechaProximaDesparacitacion(calcularProximaFecha(dtoCita.getFecha(), ServiciosCita.SERVICIO_DESPARACITAR.getFrecuencia()));
-			}else if(dtoCita!=null && dtoCita.getServicio().equals(ServiciosCita.SERVICIO_PELUQUERIA.getServicio())){
-				dtoMascota.setFechaProximaPeluqueria(calcularProximaFecha(dtoCita.getFecha(), ServiciosCita.SERVICIO_PELUQUERIA.getFrecuencia()));
-			}else if(dtoCita!=null && dtoCita.getServicio().equals(ServiciosCita.SERVICIO_VACUNA_TRIPLEFELINA.getServicio())){
-				dtoMascota.setFechaProximaVacunaTripleFelina(calcularProximaFecha(dtoCita.getFecha(), ServiciosCita.SERVICIO_VACUNA_TRIPLEFELINA.getFrecuencia()));
-			}else if(dtoCita!=null && dtoCita.getServicio().equals(ServiciosCita.SERVICIO_VACUNA_RABIA.getServicio())){
-				dtoMascota.setFechaProximaVacunaRabia(calcularProximaFecha(dtoCita.getFecha(), ServiciosCita.SERVICIO_VACUNA_RABIA.getFrecuencia()));
+			
+			ServiciosCita[] listaServicios = ServiciosCita.values();
+			Optional<ServiciosCita> servicioBuscado = Arrays.stream(listaServicios).filter(servicioCita -> servicioCita.getServicio().equals(servicio)).findFirst();
+			if(dtoCita!=null && servicioBuscado.isPresent()){
+				dtoMascota.setFechaProximaDesparacitacion(calcularProximaFecha(dtoCita.getFecha(), servicioBuscado.get().getFrecuencia()));
 			}
 			return dtoMascota;
 		}
 		
-		public LocalDateTime calcularProximaFecha(LocalDateTime fechaAnterior, int tiempoAdicional){
+		private LocalDateTime calcularProximaFecha(LocalDateTime fechaAnterior, int tiempoAdicional){
 			LocalDateTime fechaProximoMes = fechaAnterior.plusMonths(tiempoAdicional);
 			return fechaProximoMes.minusDays(3);
 			
